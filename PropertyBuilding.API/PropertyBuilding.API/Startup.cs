@@ -7,10 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PropertyBuilding.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Property.API
 {
@@ -32,6 +34,9 @@ namespace Property.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Property.API", Version = "v1" });
             });
+            services.AddDbContext<PropertyBuildingDataBaseContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("PropertyBuildingApiConnection"),
+            b => b.MigrationsAssembly("PropertyBuilding.Api")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
