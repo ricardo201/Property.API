@@ -6,6 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
@@ -16,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Property.Core\Property.Core.csproj" />
-    <ProjectReference Include="..\Property.Infrastructure\Property.Infrastructure.csproj" />
+    <ProjectReference Include="..\Property.Core\PropertyBuilding.Core.csproj" />
+    <ProjectReference Include="..\Property.Infrastructure\PropertyBuilding.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

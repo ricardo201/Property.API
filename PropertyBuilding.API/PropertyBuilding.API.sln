@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Property.API", "Property.API\Property.API.csproj", "{2A89B986-3370-484F-9DB6-B95F4FB7047C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyBuilding.API", "Property.API\PropertyBuilding.API.csproj", "{2A89B986-3370-484F-9DB6-B95F4FB7047C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Property.Core", "Property.Core\Property.Core.csproj", "{7A26C394-7322-4320-9C0B-2CF15558D431}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyBuilding.Core", "Property.Core\PropertyBuilding.Core.csproj", "{7A26C394-7322-4320-9C0B-2CF15558D431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Property.Infrastructure", "Property.Infrastructure\Property.Infrastructure.csproj", "{70C521BE-EBF5-4BED-A7E6-1E1E5310F10F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyBuilding.Infrastructure", "Property.Infrastructure\PropertyBuilding.Infrastructure.csproj", "{70C521BE-EBF5-4BED-A7E6-1E1E5310F10F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Property.Test", "Property.Test\Property.Test.csproj", "{E6376526-E190-416B-A423-3E53BEDEAF3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyBuilding.Test", "Property.Test\PropertyBuilding.Test.csproj", "{E6376526-E190-416B-A423-3E53BEDEAF3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
