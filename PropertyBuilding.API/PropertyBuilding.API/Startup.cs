@@ -36,7 +36,7 @@ namespace Property.API
             });
             services.AddDbContext<PropertyBuildingDataBaseContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PropertyBuildingApiConnection"),
-            b => b.MigrationsAssembly("PropertyBuilding.Api")));
+            b => b.MigrationsAssembly("PropertyBuilding.API")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
