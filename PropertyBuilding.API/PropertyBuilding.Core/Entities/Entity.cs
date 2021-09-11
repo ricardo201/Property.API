@@ -1,6 +1,6 @@
-﻿using Property.Core.Enumerations;
+﻿using PropertyBuilding.Core.Enumerations;
 
-namespace Property.Core.Entities
+namespace PropertyBuilding.Core.Entities
 {
     public abstract class Entity
     {

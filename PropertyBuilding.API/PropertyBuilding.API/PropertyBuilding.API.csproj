@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Property.Core\PropertyBuilding.Core.csproj" />
-    <ProjectReference Include="..\Property.Infrastructure\PropertyBuilding.Infrastructure.csproj" />
+    <ProjectReference Include="..\PropertyBuilding.Core\PropertyBuilding.Core.csproj" />
+    <ProjectReference Include="..\PropertyBuilding.Infrastructure\PropertyBuilding.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

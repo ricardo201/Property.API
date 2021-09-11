@@ -1,4 +1,4 @@
-﻿namespace Property.Core.Enumerations
+﻿namespace PropertyBuilding.Core.Enumerations
 {
     public enum RoleType
     {

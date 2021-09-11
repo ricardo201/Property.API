@@ -1,7 +1,7 @@
-﻿using Property.Core.Enumerations;
+﻿using PropertyBuilding.Core.Enumerations;
 using System.Collections.Generic;
 
-namespace Property.Core.Entities
+namespace PropertyBuilding.Core.Entities
 {
     public class User : Entity
     {

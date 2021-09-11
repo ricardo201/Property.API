@@ -1,4 +1,4 @@
-﻿namespace Property.Core.Entities
+﻿namespace PropertyBuilding.Core.Entities
 {
     public class PropertyImage : Entity
     {

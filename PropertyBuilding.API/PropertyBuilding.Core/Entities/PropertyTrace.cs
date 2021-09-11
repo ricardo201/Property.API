@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Property.Core.Entities
+namespace PropertyBuilding.Core.Entities
 {
     public class PropertyTrace : Entity
     {
