@@ -14,4 +14,8 @@
     <Folder Include="Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Property.Core\Property.Core.csproj" />
+  </ItemGroup>
+
 </Project>
