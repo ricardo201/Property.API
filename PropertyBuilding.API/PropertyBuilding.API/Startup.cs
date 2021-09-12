@@ -17,6 +17,10 @@ using PropertyBuilding.Infrastructure.Interfaces;
 using PropertyBuilding.Infrastructure.Services;
 using PropertyBuilding.Core.Interfaces;
 using PropertyBuilding.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using PropertyBuilding.Core.Services;
 
 namespace Property.API
 {
@@ -32,7 +36,23 @@ namespace Property.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateLifetime = true,
+                    RequireExpirationTime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authentication:SecretKey"])),
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidAudience = Configuration["Authentication:ValidAudience"],
+                    ValidIssuer = Configuration["Authentication:ValidIssuer"]
+                };
+            });
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
