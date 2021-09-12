@@ -21,6 +21,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PropertyBuilding.Core.Services;
+using PropertyBuilding.Infrastructure.Filters;
+using FluentValidation.AspNetCore;
+using PropertyBuilding.Infrastructure.Validators;
 
 namespace Property.API
 {
@@ -53,7 +56,10 @@ namespace Property.API
                     ValidIssuer = Configuration["Authentication:ValidIssuer"]
                 };
             });
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<ExceptionFilter>();
+            });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
@@ -62,9 +68,15 @@ namespace Property.API
             services.AddTransient<IEncriptService, EncriptService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddTransient<IUserService, UserService>();
             services.AddDbContext<PropertyBuildingDataBaseContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PropertyBuildingApiConnection"),
             b => b.MigrationsAssembly("PropertyBuilding.API")));
+            services.AddMvc(options => {
+                options.Filters.Add<ValidationFilter>();
+            }).AddFluentValidation(options => {               
+                options.RegisterValidatorsFromAssemblyContaining<SignInValidator>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
