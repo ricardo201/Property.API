@@ -13,6 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PropertyBuilding.Infrastructure.Interfaces;
+using PropertyBuilding.Infrastructure.Services;
+using PropertyBuilding.Core.Interfaces;
+using PropertyBuilding.Infrastructure.Repositories;
 
 namespace Property.API
 {
@@ -34,7 +38,10 @@ namespace Property.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Property.API", Version = "v1" });
-            });
+            });            
+            services.AddTransient<IEncriptService, EncriptService>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddDbContext<PropertyBuildingDataBaseContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PropertyBuildingApiConnection"),
             b => b.MigrationsAssembly("PropertyBuilding.API")));
