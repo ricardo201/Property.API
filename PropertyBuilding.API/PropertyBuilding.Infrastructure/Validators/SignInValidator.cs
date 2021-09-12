@@ -9,8 +9,10 @@ namespace PropertyBuilding.Infrastructure.Validators
 {
     public class SignInValidator : AbstractValidator<SignInDto>
     {
-        public SignInValidator()
+        private readonly IUserService _userService;
+        public SignInValidator(IUserService userService)
         {
+            _userService = userService;
             RuleFor(signInDto => signInDto.Password)
                 .NotNull().WithMessage(SignInErrorMessages.PasswordCanNotNull)
                 .MinimumLength(10).WithMessage(SignInErrorMessages.PasswordCanNotLessThan10)
@@ -23,7 +25,14 @@ namespace PropertyBuilding.Infrastructure.Validators
             RuleFor(signInDto => signInDto.UserName)
                 .NotNull().WithMessage(SignInErrorMessages.UserNameCanNotNull)
                 .MinimumLength(10).WithMessage(SignInErrorMessages.UserNameCanNotLessThan10)
-                .MaximumLength(50).WithMessage(SignInErrorMessages.UserNameCanNotGreaterThan50);
+                .MaximumLength(50).WithMessage(SignInErrorMessages.UserNameCanNotGreaterThan50)
+                .MustAsync(UserNotExistValidation).WithMessage(SignInErrorMessages.UserNameExist); ;
+        }
+
+        private async Task<bool> UserNotExistValidation(string userName, CancellationToken cancellationToken)
+        {
+            var exist = await _userService.NotExistUserName(userName);
+            return exist;
         }
     }
 }

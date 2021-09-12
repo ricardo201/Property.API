@@ -2,24 +2,29 @@
 using NUnit.Framework;
 using PropertyBuilding.Core.Const.ErrorMessages;
 using PropertyBuilding.Core.DTOs;
+using PropertyBuilding.Core.Entities;
 using PropertyBuilding.Core.Enumerations;
+using PropertyBuilding.Core.Interfaces;
+using PropertyBuilding.Core.Services;
 using PropertyBuilding.Infrastructure.Validators;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PropertyBuilding.Test.UnitTestValidators
 {
     [TestFixture]
-    public class SignInValidatorTest
+    public class SignInValidatorTest : TestBase
     {
         private SignInValidator signInValidator;
+        private IUserService _userService;
+        private IUnitOfWork _unitOfWork;
         [SetUp]
         public void Setup()
         {
-            signInValidator = new SignInValidator();
+            var dataBaseName = Guid.NewGuid().ToString();            
+            _unitOfWork = CreateUnitOfwork(dataBaseName);
+            var configuration = CreateConfiguration();
+            _userService = new UserService(configuration, _unitOfWork);
+            signInValidator = new SignInValidator(_userService);
         }
 
         [Test]
@@ -29,7 +34,18 @@ namespace PropertyBuilding.Test.UnitTestValidators
             var result = signInValidator.TestValidate(signInDto);
             result.ShouldHaveValidationErrorFor(signInDto => signInDto.UserName)
                 .WithErrorMessage(SignInErrorMessages.UserNameCanNotNull);
-        }        
+        }
+
+        [Test]
+        public void ShouldHaveErrorWhenUserNameExistInDataBase()
+        {
+            var userToRegister = new User { UserName = "TestUserName", Password = "PasswordTestUserRegister01*", Role = RoleType.User, Status = StatusType.Active };
+            _userService.Register(userToRegister);
+            var signInDto = new SignInDto { UserName = "TestUserName", Password = "PasswordTest123*", Role = RoleType.User };
+            var result = signInValidator.TestValidate(signInDto);
+            result.ShouldHaveValidationErrorFor(signInDto => signInDto.UserName)
+                .WithErrorMessage(SignInErrorMessages.UserNameExist);
+        }
 
         [Test]
         public void ShouldHaveErrorWhenUserNameLenghtIsLessThan10()
