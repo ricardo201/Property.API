@@ -15,11 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Responses\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PropertyBuilding.Core\PropertyBuilding.Core.csproj" />
     <ProjectReference Include="..\PropertyBuilding.Infrastructure\PropertyBuilding.Infrastructure.csproj" />
   </ItemGroup>
