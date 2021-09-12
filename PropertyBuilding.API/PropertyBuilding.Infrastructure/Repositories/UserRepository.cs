@@ -19,5 +19,10 @@ namespace PropertyBuilding.Infrastructure.Repositories
         {
             return (await _entities.CountAsync(item => item.UserName == userName));
         }
+
+        public async Task<User> GetLoginByCredentials(User user)
+        {
+            return await _entities.FirstOrDefaultAsync(item => item.UserName == user.UserName && item.Password == user.Password);
+        }
     }
 }

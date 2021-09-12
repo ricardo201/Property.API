@@ -6,5 +6,6 @@ namespace PropertyBuilding.Core.Interfaces
     public interface IUserRepository : IRepository<User>
     {
         Task<int> CountByUserNameAsync(string userName);
+        Task<User> GetLoginByCredentials(User user);
     }
 }
