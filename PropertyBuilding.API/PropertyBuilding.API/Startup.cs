@@ -59,7 +59,11 @@ namespace Property.API
             services.AddControllers(options =>
             {
                 options.Filters.Add<ExceptionFilter>();
-            });
+            })
+            .AddNewtonsoftJson(options => {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                }); ;
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
@@ -69,6 +73,7 @@ namespace Property.API
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IOwnerService, OwnerService>();
             services.AddDbContext<PropertyBuildingDataBaseContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PropertyBuildingApiConnection"),
             b => b.MigrationsAssembly("PropertyBuilding.API")));
@@ -76,6 +81,7 @@ namespace Property.API
                 options.Filters.Add<ValidationFilter>();
             }).AddFluentValidation(options => {               
                 options.RegisterValidatorsFromAssemblyContaining<SignInValidator>();
+                options.RegisterValidatorsFromAssemblyContaining<OwnerValidator>();
             });
         }
 
@@ -93,8 +99,8 @@ namespace Property.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

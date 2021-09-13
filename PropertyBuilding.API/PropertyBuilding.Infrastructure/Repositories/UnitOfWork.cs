@@ -1,4 +1,5 @@
-﻿using PropertyBuilding.Core.Interfaces;
+﻿using PropertyBuilding.Core.Entities;
+using PropertyBuilding.Core.Interfaces;
 using PropertyBuilding.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace PropertyBuilding.Infrastructure.Repositories
     {
         private readonly PropertyBuildingDataBaseContext _dataBaseContext;
         private readonly IUserRepository _userRepository;
+        private readonly IRepository<Owner> _ownerRepository;
         public UnitOfWork(PropertyBuildingDataBaseContext dataBaseContext)
         {
             _dataBaseContext = dataBaseContext;
         }
         public IUserRepository UserRepository => _userRepository ?? new UserRepository(_dataBaseContext);
+        public IRepository<Owner> OwnerRepository => _ownerRepository ?? new Repository<Owner>(_dataBaseContext);
         public void Dispose()
         {
             if (_dataBaseContext != null)
@@ -28,7 +31,6 @@ namespace PropertyBuilding.Infrastructure.Repositories
         public async Task SaveChangesAsync()
         {
             await _dataBaseContext.SaveChangesAsync();
-
         }
     }
 }
