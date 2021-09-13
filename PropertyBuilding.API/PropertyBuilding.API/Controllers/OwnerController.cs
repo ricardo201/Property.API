@@ -60,7 +60,9 @@ namespace PropertyBuilding.API.Controllers
         public async Task<IActionResult> Put(OwnerDto ownerDto)
         {
             var owner = _mapper.Map<Owner>(ownerDto);
-            owner = await _ownerService.SaveOwnerAsync(owner);
+            var idUser = int.Parse(User.Claims.FirstOrDefault(claim => claim.Type.Contains("IdUser")).Value);
+            owner.IdUser = idUser;
+            owner = await _ownerService.UpdateOwnerAsync(owner, idUser);
             ownerDto = _mapper.Map<OwnerDto>(owner);
             var response = new StandardResponse<OwnerDto>(ownerDto);
             return Ok(response);

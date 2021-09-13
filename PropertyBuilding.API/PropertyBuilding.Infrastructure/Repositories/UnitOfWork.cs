@@ -32,5 +32,10 @@ namespace PropertyBuilding.Infrastructure.Repositories
         {
             await _dataBaseContext.SaveChangesAsync();
         }
+
+        public void ChangeTrackerClear()
+        {
+            _dataBaseContext.ChangeTracker.Clear();
+        }
     }
 }

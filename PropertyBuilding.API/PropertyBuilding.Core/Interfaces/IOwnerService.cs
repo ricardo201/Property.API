@@ -11,5 +11,6 @@ namespace PropertyBuilding.Core.Interfaces
         Task<bool> ValidateOwner(int id);
         IEnumerable<Owner> GetOwners();
         Task<Owner> SaveOwnerAsync(Owner owner);
+        Task<Owner> UpdateOwnerAsync(Owner owner, int idUser);
     }
 }

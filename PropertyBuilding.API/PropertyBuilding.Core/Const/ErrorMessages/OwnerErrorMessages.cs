@@ -13,5 +13,8 @@ namespace PropertyBuilding.Core.Const.ErrorMessages
         public const string BirthdayCannotNull = "Birthday cannot be null";
         public const string NameCannotNull = "Name cannot be null";
         public const string AddressCannotNull = "Address cannot be null";
+        public const string OwnerDoesNotExist = "Owner does not exist";
+        public const string OwnerUpdateNotAllowed = "Owner update not allowed";
+
     }
 }

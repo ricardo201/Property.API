@@ -10,5 +10,6 @@ namespace PropertyBuilding.Core.Interfaces
 
         void Dispose();
         Task SaveChangesAsync();
+        void ChangeTrackerClear();
     }
 }

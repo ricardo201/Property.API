@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PropertyBuilding.Core.Enumerations;
 using PropertyBuilding.Core.Interfaces;
 using PropertyBuilding.Infrastructure.Data;
 using PropertyBuilding.Infrastructure.Mappings;
@@ -8,6 +9,7 @@ using PropertyBuilding.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,6 +50,18 @@ namespace PropertyBuilding.Test
                 .Build();
 
             return configuration;
+        }
+
+        protected ClaimsPrincipal CreateUserMock(int idUser, string userName, RoleType roleType)
+        {
+            var claims = new[]
+            {
+                new Claim("IdUser", idUser.ToString()),
+                new Claim("UserName", userName),
+                new Claim(ClaimTypes.Role, roleType.ToString())
+            };
+            var userMock = new ClaimsPrincipal(new ClaimsIdentity(claims, "TestAuthentication"));
+            return userMock;
         }
     }
 }

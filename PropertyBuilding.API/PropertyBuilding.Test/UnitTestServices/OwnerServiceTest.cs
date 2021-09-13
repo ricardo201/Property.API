@@ -73,6 +73,30 @@ namespace PropertyBuilding.Test.UnitTestServices
             Assert.IsNotNull(ownerValidate);
             Assert.IsInstanceOf<bool>(ownerValidate);
             Assert.AreEqual(true, ownerValidate);
-        }        
+        }
+
+        [Test]
+        public async Task DeleteOwnerAsyncSuccess()
+        {
+            for (int index = 0; index < 10; index++)
+            {
+                var ownerToSave = new Owner { Name = "Name Owner Test " + index, Address = "Address test", Photo = "Url Photo Test", Birthday = DateTime.Now.AddYears(-25), Status = StatusType.Active };
+                await _ownerService.SaveOwnerAsync(ownerToSave);
+            }
+            _unitOfWork.ChangeTrackerClear();
+            var ownerValidate = await _ownerService.ValidateOwner(5);
+            Assert.IsNotNull(ownerValidate);
+            Assert.IsInstanceOf<bool>(ownerValidate);
+            Assert.AreEqual(true, ownerValidate);
+            _unitOfWork.ChangeTrackerClear();
+            bool ownerDeleteSuccess = await _ownerService.DeleteOwnerAsync(5);
+            Assert.IsNotNull(ownerDeleteSuccess);
+            Assert.IsInstanceOf<bool>(ownerDeleteSuccess);
+            Assert.AreEqual(true, ownerDeleteSuccess);
+            ownerValidate = await _ownerService.ValidateOwner(5);
+            Assert.IsNotNull(ownerValidate);
+            Assert.IsInstanceOf<bool>(ownerValidate);
+            Assert.AreEqual(false, ownerValidate);
+        }
     }
 }

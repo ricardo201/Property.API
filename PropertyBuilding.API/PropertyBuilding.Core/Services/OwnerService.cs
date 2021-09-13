@@ -1,4 +1,6 @@
-﻿using PropertyBuilding.Core.Entities;
+﻿using PropertyBuilding.Core.Const.ErrorMessages;
+using PropertyBuilding.Core.Entities;
+using PropertyBuilding.Core.Exceptions;
 using PropertyBuilding.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -51,6 +53,20 @@ namespace PropertyBuilding.Core.Services
             var owner = await _unitOfWork.OwnerRepository.GetByIdAsync(id);
 
             return (owner != null);
+        }
+
+        public async Task<Owner> UpdateOwnerAsync(Owner owner, int idUser)
+        {           
+            var ownerOld = await _unitOfWork.OwnerRepository.GetByIdAsync(owner.Id);
+            if (ownerOld == null) throw new BusinessException(OwnerErrorMessages.OwnerDoesNotExist);
+            if (ownerOld.IdUser != owner.IdUser)
+            {
+                throw new BusinessException(OwnerErrorMessages.OwnerUpdateNotAllowed);
+            }
+            owner.Status = ownerOld.Status;
+            _unitOfWork.OwnerRepository.Update(owner);
+            await _unitOfWork.SaveChangesAsync();
+            return owner;
         }
     }
 }
