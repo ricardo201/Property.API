@@ -24,8 +24,10 @@ using PropertyBuilding.Core.Services;
 using PropertyBuilding.Infrastructure.Filters;
 using FluentValidation.AspNetCore;
 using PropertyBuilding.Infrastructure.Validators;
+using Microsoft.AspNetCore.Http;
+using PropertyBuilding.Core.Options;
 
-namespace Property.API
+namespace PropertyBuilding.API
 {
     public class Startup
     {
@@ -74,6 +76,7 @@ namespace Property.API
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IOwnerService, OwnerService>();
+            services.AddTransient<IPropertyService, PropertyService>();
             services.AddDbContext<PropertyBuildingDataBaseContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PropertyBuildingApiConnection"),
             b => b.MigrationsAssembly("PropertyBuilding.API")));
@@ -82,7 +85,15 @@ namespace Property.API
             }).AddFluentValidation(options => {               
                 options.RegisterValidatorsFromAssemblyContaining<SignInValidator>();
                 options.RegisterValidatorsFromAssemblyContaining<OwnerValidator>();
+                options.RegisterValidatorsFromAssemblyContaining<PropertyValidator>();
             });
+            services.AddSingleton<IUriService>(provider => {
+                var accesor = provider.GetRequiredService<IHttpContextAccessor>();
+                var request = accesor.HttpContext.Request;
+                var absolutUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(absolutUri);
+            });
+            services.Configure<PaginationOptions>(Configuration.GetSection("Pagination"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
