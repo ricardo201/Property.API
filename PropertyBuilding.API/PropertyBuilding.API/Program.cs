@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Property.API
+namespace PropertyBuilding.API
 {
     public class Program
     {
