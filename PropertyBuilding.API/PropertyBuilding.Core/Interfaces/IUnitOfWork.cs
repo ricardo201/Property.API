@@ -7,6 +7,7 @@ namespace PropertyBuilding.Core.Interfaces
     {
         IUserRepository UserRepository { get; }
         IRepository<Owner> OwnerRepository { get; }
+        IPropertyRepositoy PropertyRepository { get; }
 
         void Dispose();
         Task SaveChangesAsync();

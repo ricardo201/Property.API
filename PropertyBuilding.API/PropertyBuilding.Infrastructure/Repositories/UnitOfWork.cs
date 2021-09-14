@@ -1,10 +1,7 @@
-﻿using PropertyBuilding.Core.Entities;
+﻿using PropertyBuilding.Infrastructure.Repository;
+using PropertyBuilding.Core.Entities;
 using PropertyBuilding.Core.Interfaces;
 using PropertyBuilding.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PropertyBuilding.Infrastructure.Repositories
@@ -14,12 +11,14 @@ namespace PropertyBuilding.Infrastructure.Repositories
         private readonly PropertyBuildingDataBaseContext _dataBaseContext;
         private readonly IUserRepository _userRepository;
         private readonly IRepository<Owner> _ownerRepository;
+        private readonly IPropertyRepositoy _propertyRepository;
         public UnitOfWork(PropertyBuildingDataBaseContext dataBaseContext)
         {
             _dataBaseContext = dataBaseContext;
         }
         public IUserRepository UserRepository => _userRepository ?? new UserRepository(_dataBaseContext);
         public IRepository<Owner> OwnerRepository => _ownerRepository ?? new Repository<Owner>(_dataBaseContext);
+        public IPropertyRepositoy PropertyRepository => _propertyRepository ?? new PropertyRepository(_dataBaseContext);
         public void Dispose()
         {
             if (_dataBaseContext != null)
