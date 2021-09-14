@@ -6,12 +6,8 @@ using PropertyBuilding.Core.Interfaces;
 using PropertyBuilding.Infrastructure.Data;
 using PropertyBuilding.Infrastructure.Mappings;
 using PropertyBuilding.Infrastructure.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PropertyBuilding.Test
 {
