@@ -11,6 +11,7 @@ namespace PropertyBuilding.Infrastructure.Mappings
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, SignInDto>().ReverseMap();
             CreateMap<Owner, OwnerDto>().ReverseMap();
+            CreateMap<Property, PropertyDto>().ReverseMap();
         }
     }
 }
