@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PropertyBuilding.Infrastructure.Services
+namespace PropertyBuilding.Test.UnitTestControllers
 {
-    class PropertyImageServiceTest
+    class PropertyImageControllerTest
     {
     }
 }
