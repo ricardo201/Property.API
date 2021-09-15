@@ -9,6 +9,7 @@ namespace PropertyBuilding.Core.Interfaces
         IRepository<Owner> OwnerRepository { get; }
         IPropertyRepositoy PropertyRepository { get; }
         IPropertyImageRepository PropertyImageRepository { get; }
+        IRepository<PropertyTrace> PropertyTraceRepository { get; }
         void Dispose();
         Task SaveChangesAsync();
         void ChangeTrackerClear();

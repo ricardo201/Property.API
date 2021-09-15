@@ -13,6 +13,7 @@ namespace PropertyBuilding.Infrastructure.Repositories
         private readonly IRepository<Owner> _ownerRepository;
         private readonly IPropertyRepositoy _propertyRepository;
         private readonly PropertyImageRepository _propertyImageRepository;
+        private readonly IRepository<PropertyTrace> _propertyTraceRepository;
         public UnitOfWork(PropertyBuildingDataBaseContext dataBaseContext)
         {
             _dataBaseContext = dataBaseContext;
@@ -21,6 +22,7 @@ namespace PropertyBuilding.Infrastructure.Repositories
         public IRepository<Owner> OwnerRepository => _ownerRepository ?? new Repository<Owner>(_dataBaseContext);
         public IPropertyRepositoy PropertyRepository => _propertyRepository ?? new PropertyRepository(_dataBaseContext);
         public IPropertyImageRepository PropertyImageRepository => _propertyImageRepository ?? new PropertyImageRepository(_dataBaseContext);
+        public IRepository<PropertyTrace> PropertyTraceRepository => _propertyTraceRepository ?? new Repository<PropertyTrace>(_dataBaseContext);
         public void Dispose()
         {
             if (_dataBaseContext != null)
