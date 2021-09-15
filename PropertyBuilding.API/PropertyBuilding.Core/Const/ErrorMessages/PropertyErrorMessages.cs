@@ -8,6 +8,8 @@ namespace PropertyBuilding.Core.Const.ErrorMessages
 {
     public class PropertyErrorMessages
     {
+        public const string PropertyCannotNull = "Property cannot be null";
+        public const string PropertyCannotZero = "Property cannot be zero";
         public const string YearCannotNull = "Year cannot be null";
         public const string YearLessThan1900 = "Year cannot be less than 1900";
         public const string NameCannotNull = "Name cannot be null";
