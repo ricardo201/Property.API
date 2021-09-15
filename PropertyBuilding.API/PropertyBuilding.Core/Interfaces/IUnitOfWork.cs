@@ -8,7 +8,7 @@ namespace PropertyBuilding.Core.Interfaces
         IUserRepository UserRepository { get; }
         IRepository<Owner> OwnerRepository { get; }
         IPropertyRepositoy PropertyRepository { get; }
-
+        IPropertyImageRepository PropertyImageRepository { get; }
         void Dispose();
         Task SaveChangesAsync();
         void ChangeTrackerClear();
