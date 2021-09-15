@@ -34,9 +34,17 @@ namespace PropertyBuilding.Core.Services
 
         public async Task<Boolean> DeletePropertyTraceAsync(int id)
         {
-            await _unitOfWork.PropertyTraceRepository.DeleteByIdAsync(id);
-            await _unitOfWork.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _unitOfWork.PropertyTraceRepository.DeleteByIdAsync(id);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                ///TODO: implements logger
+                return false;
+            }
         }
     }
 }
