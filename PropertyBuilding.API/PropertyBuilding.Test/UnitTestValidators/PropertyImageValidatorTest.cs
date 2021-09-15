@@ -1,7 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 using PropertyBuilding.Core.Const.ErrorMessages;
 using PropertyBuilding.Core.Const.PropertyImages;
@@ -13,12 +12,6 @@ using PropertyBuilding.Core.Options;
 using PropertyBuilding.Core.Services;
 using PropertyBuilding.Infrastructure.Validators;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PropertyBuilding.Test.UnitTestValidators
@@ -31,29 +24,7 @@ namespace PropertyBuilding.Test.UnitTestValidators
         private IOwnerService _ownerService;
         private IUnitOfWork _unitOfWork;
         private IOptions<PaginationOptions> _paginationOptions;
-
-        private IFormFile CreateMockImageFile(string nameFile, long fileSize, string contentType)
-        {
-            var fileMock = new Mock<IFormFile>();
-            //Setup mock file using a memory stream
-            Bitmap bitmap = new Bitmap(1000, 800, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-            Graphics graphics = Graphics.FromImage(bitmap);
-            Pen pen = new Pen(Color.FromKnownColor(KnownColor.Blue), 2);
-            graphics.DrawArc(pen, 0, 0, 700, 700, 0, 180);
-            MemoryStream memoryStream = new MemoryStream();
-            byte[] byteArray;
-            bitmap.Save(memoryStream, ImageFormat.Jpeg);
-            byteArray = memoryStream.ToArray();
-            var fileName = nameFile;
-            var ms = new MemoryStream();
-            memoryStream.Position = 0;
-            fileMock.Setup(_ => _.OpenReadStream()).Returns(memoryStream);
-            fileMock.Setup(_ => _.FileName).Returns(fileName);
-            fileMock.Setup(_ => _.ContentType).Returns(contentType);
-            fileMock.Setup(_ => _.Length).Returns(fileSize);            
-            var file = fileMock.Object;
-            return file;
-        }
+        
         [SetUp]
         public void Setup()
         {
