@@ -1,31 +1,25 @@
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using PropertyBuilding.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using PropertyBuilding.Infrastructure.Interfaces;
-using PropertyBuilding.Infrastructure.Services;
-using PropertyBuilding.Core.Interfaces;
-using PropertyBuilding.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using PropertyBuilding.Core.Services;
-using PropertyBuilding.Infrastructure.Filters;
-using FluentValidation.AspNetCore;
-using PropertyBuilding.Infrastructure.Validators;
-using Microsoft.AspNetCore.Http;
+using Microsoft.OpenApi.Models;
+using PropertyBuilding.Core.Interfaces;
 using PropertyBuilding.Core.Options;
+using PropertyBuilding.Core.Services;
+using PropertyBuilding.Infrastructure.Data;
+using PropertyBuilding.Infrastructure.Filters;
+using PropertyBuilding.Infrastructure.Interfaces;
+using PropertyBuilding.Infrastructure.Repositories;
+using PropertyBuilding.Infrastructure.Services;
+using PropertyBuilding.Infrastructure.Validators;
+using System;
+using System.Text;
 
 namespace PropertyBuilding.API
 {
@@ -77,6 +71,9 @@ namespace PropertyBuilding.API
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IPropertyService, PropertyService>();
+            services.AddTransient<IPropertyImageService, PropertyImageService>();
+            services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IPropertyTraceService, PropertyTraceService>();
             services.AddDbContext<PropertyBuildingDataBaseContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PropertyBuildingApiConnection"),
             b => b.MigrationsAssembly("PropertyBuilding.API")));
@@ -86,6 +83,8 @@ namespace PropertyBuilding.API
                 options.RegisterValidatorsFromAssemblyContaining<SignInValidator>();
                 options.RegisterValidatorsFromAssemblyContaining<OwnerValidator>();
                 options.RegisterValidatorsFromAssemblyContaining<PropertyValidator>();
+                options.RegisterValidatorsFromAssemblyContaining<PropertyImageValidator>();
+                options.RegisterValidatorsFromAssemblyContaining<PropertyTraceValidator>();
             });
             services.AddSingleton<IUriService>(provider => {
                 var accesor = provider.GetRequiredService<IHttpContextAccessor>();
