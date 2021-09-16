@@ -15,6 +15,7 @@ namespace PropertyBuilding.Infrastructure.Mappings
             CreateMap<Property, PropertyChangePriceDto>().ReverseMap();
             CreateMap<PropertyImage, PropertyImageDto>().ReverseMap();
             CreateMap<PropertyImage, PropertyImageChangeEnabledDto>().ReverseMap();
+            CreateMap<PropertyTrace, PropertyTraceDto>().ReverseMap();
         }
     }
 }
