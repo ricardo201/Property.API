@@ -117,5 +117,32 @@ namespace PropertyBuilding.Test.UnitTestServices
             Assert.IsNotNull(propertyTraceDeleteValidate);
             Assert.AreEqual(true, propertyTraceDeleteValidate);
         }
+
+        [Test]
+        public async Task UpdatePropertyTraceAsynSuccess()
+        {
+            var userMock = CreateUserMock(1, "userTest01", RoleType.User);
+            int idUser = int.Parse(userMock.Claims.FirstOrDefault(claim => claim.Type.Contains("IdUser")).Value);
+            DateTime birthday = DateTime.Now.AddYears(new Random().Next(MIN_BIRTHDAY_YEAR, MAX_BIRTHDAY_YEAR)).Date;
+            var owner = new Owner { Name = "Name Owner Test", Address = "Address test", Photo = "Url Photo Test", Birthday = birthday, Status = StatusType.Active, IdUser = idUser };
+            await _ownerService.SaveOwnerAsync(owner);
+            double price = new Random().Next(MIN_PRICE, MAX_PRICE);
+            var propertyToSave = new Property { Name = "Name Test", Address = "Address test", Year = DateTime.Now.Year, Status = StatusType.Active, Price = price, IdOwner = owner.Id, IdUser = idUser };
+            var property = await _propertyService.SavePropertyAsync(propertyToSave);
+            var propertyTraceToSave = new PropertyTrace { Name = "Name Property Trace Test", Tax = 10, DateSale = DateTime.Now.Date, IdUser = idUser, IdProperty = property.Id };
+            await _propertyTraceService.SavePropertyTraceAsync(propertyTraceToSave);
+            _unitOfWork.ChangeTrackerClear();
+            var propertyTraceService = await _propertyTraceService.GetPropertyTraceAsync(1);
+            propertyTraceService.Name = "New Name Test";
+            propertyTraceService.DateSale = DateTime.Now.AddYears(-1).Date;
+            propertyTraceService.Tax = 0;
+            propertyTraceService.Value = 100; 
+            var propertyTraceServiceChanged = await _propertyTraceService.UpdatePropertyTraceAsyn(propertyTraceService);
+            Assert.IsNotNull(propertyTraceServiceChanged);
+            Assert.AreEqual("New Name Test", propertyTraceServiceChanged.Name);
+            Assert.AreEqual(0, propertyTraceServiceChanged.Tax);
+            Assert.AreEqual(DateTime.Now.AddYears(-1).Date, propertyTraceServiceChanged.DateSale);
+            Assert.AreEqual(100, propertyTraceServiceChanged.Value);
+        }
     }
 }

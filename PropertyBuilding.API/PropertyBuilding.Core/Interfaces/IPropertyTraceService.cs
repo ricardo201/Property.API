@@ -10,5 +10,6 @@ namespace PropertyBuilding.Core.Interfaces
         Task<PropertyTrace> GetPropertyTraceAsync(int id);
         IEnumerable<PropertyTrace> GetPropertyTraces();
         Task<PropertyTrace> SavePropertyTraceAsync(PropertyTrace PropertyTrace);
+        Task<PropertyTrace> UpdatePropertyTraceAsyn(PropertyTrace propertyTrace);
     }
 }

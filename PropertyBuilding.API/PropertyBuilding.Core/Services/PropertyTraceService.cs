@@ -1,4 +1,6 @@
-﻿using PropertyBuilding.Core.Entities;
+﻿using PropertyBuilding.Core.Const.ErrorMessages;
+using PropertyBuilding.Core.Entities;
+using PropertyBuilding.Core.Exceptions;
 using PropertyBuilding.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -45,6 +47,20 @@ namespace PropertyBuilding.Core.Services
                 ///TODO: implements logger
                 return false;
             }
+        }
+
+        public async Task<PropertyTrace> UpdatePropertyTraceAsyn(PropertyTrace propertyTrace)
+        {
+            var propertyOld = await _unitOfWork.PropertyTraceRepository.GetByIdAsync(propertyTrace.Id);            
+            if (propertyOld == null) throw new BusinessException(PropertyTraceErrorMessages.PropertyTraceDoesNotExist);
+            if (propertyOld.IdUser != propertyTrace.IdUser)
+            {
+                throw new BusinessException(PropertyErrorMessages.PropertyUpdateNotAllowed);
+            }
+            propertyTrace.Status = propertyOld.Status;
+            _unitOfWork.PropertyTraceRepository.Update(propertyTrace);
+            await _unitOfWork.SaveChangesAsync();
+            return propertyTrace;
         }
     }
 }
